@@ -1,91 +1,9 @@
-/**
- * Smart Demand Forecast - Main JavaScript
- */
+// Main JavaScript for Smart Demand Forecast
 
-// Wait for DOM content to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('Smart Demand Forecast application initialized');
   
-  // Initialize tooltips
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-  tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
-  
-  // File upload handling with preview
-  const fileInput = document.getElementById('dataset');
-  if (fileInput) {
-    fileInput.addEventListener('change', function(e) {
-      const fileName = e.target.files[0]?.name;
-      const fileSize = e.target.files[0]?.size;
-      
-      if (fileName) {
-        // Display filename
-        let fileInfoElement = document.getElementById('file-info');
-        if (!fileInfoElement) {
-          fileInfoElement = document.createElement('div');
-          fileInfoElement.id = 'file-info';
-          fileInfoElement.className = 'alert alert-info mt-2';
-          fileInput.parentNode.appendChild(fileInfoElement);
-        }
-        
-        // Format file size
-        const formattedSize = formatFileSize(fileSize);
-        fileInfoElement.innerHTML = `
-          <i class="fas fa-file-csv me-2"></i>
-          Selected file: <strong>${fileName}</strong> (${formattedSize})
-        `;
-        
-        // Validate file type
-        if (!fileName.toLowerCase().endsWith('.csv')) {
-          showError('Please select a CSV file.');
-          fileInput.value = '';
-          if (fileInfoElement) fileInfoElement.remove();
-        }
-      }
-    });
-  }
-  
-  // Forecast form validation
-  const forecastForm = document.getElementById('forecast-form');
-  if (forecastForm) {
-    forecastForm.addEventListener('submit', function(e) {
-      const productSelect = document.getElementById('product');
-      const daysInput = document.getElementById('days');
-      
-      if (productSelect.value === '') {
-        e.preventDefault();
-        showError('Please select a product.');
-        return;
-      }
-      
-      const days = parseInt(daysInput.value);
-      if (isNaN(days) || days < 1 || days > 90) {
-        e.preventDefault();
-        showError('Please enter a valid number of days (1-90).');
-        return;
-      }
-      
-      // Show loading indicator
-      showLoading('Generating forecast...');
-    });
-  }
-  
-  // Upload form validation
-  const uploadForm = document.getElementById('upload-form');
-  if (uploadForm) {
-    uploadForm.addEventListener('submit', function(e) {
-      if (!fileInput.files[0]) {
-        e.preventDefault();
-        showError('Please select a file to upload.');
-        return;
-      }
-      
-      // Show loading indicator
-      showLoading('Uploading and processing data...');
-    });
-  }
-  
-  // Helper functions
+  // Format file sizes in human readable format
   function formatFileSize(bytes) {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -94,50 +12,101 @@ document.addEventListener('DOMContentLoaded', function() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
   
+  // Show error messages
   function showError(message) {
-    let errorAlert = document.getElementById('error-alert');
-    if (!errorAlert) {
-      errorAlert = document.createElement('div');
-      errorAlert.id = 'error-alert';
-      errorAlert.className = 'alert alert-danger alert-dismissible fade show mt-3';
-      errorAlert.setAttribute('role', 'alert');
-      
-      const closeButton = document.createElement('button');
-      closeButton.type = 'button';
-      closeButton.className = 'btn-close';
-      closeButton.setAttribute('data-bs-dismiss', 'alert');
-      closeButton.setAttribute('aria-label', 'Close');
-      
-      errorAlert.appendChild(closeButton);
-      document.querySelector('.card-body').prepend(errorAlert);
-    }
-    
-    errorAlert.innerHTML = `
+    const errorContainer = document.createElement('div');
+    errorContainer.className = 'alert alert-danger alert-dismissible fade show';
+    errorContainer.innerHTML = `
       <i class="fas fa-exclamation-triangle me-2"></i>
       <strong>Error:</strong> ${message}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     `;
+    
+    // Find a suitable container
+    const container = document.querySelector('.container') || document.body;
+    container.prepend(errorContainer);
+    
+    // Auto-dismiss after 10 seconds
+    setTimeout(() => {
+      const bsAlert = new bootstrap.Alert(errorContainer);
+      bsAlert.close();
+    }, 10000);
   }
   
+  // Show loading indicator
   function showLoading(message = 'Loading...') {
-    // Create loading overlay
-    const loadingEl = document.createElement('div');
-    loadingEl.className = 'loading-spinner';
-    loadingEl.innerHTML = `
-      <div class="spinner-border text-light" role="status">
-        <span class="visually-hidden">Loading...</span>
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'loading-spinner';
+    loadingDiv.innerHTML = `
+      <div class="spinner-container">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2 text-white">${message}</p>
       </div>
-      <div class="text-light mt-3">${message}</div>
     `;
-    document.body.appendChild(loadingEl);
+    document.body.appendChild(loadingDiv);
+    return loadingDiv;
   }
   
-  // Dynamically adjust plot size on window resize
-  window.addEventListener('resize', function() {
-    const plotElement = document.getElementById('forecastChart');
-    if (plotElement && window.Plotly) {
-      Plotly.Plots.resize(plotElement);
+  // Hide loading indicator
+  function hideLoading(loadingElement) {
+    if (loadingElement && loadingElement.parentNode) {
+      loadingElement.parentNode.removeChild(loadingElement);
     }
+  }
+  
+  // Initialize file upload functionality if present
+  const fileUpload = document.getElementById('dataset');
+  if (fileUpload) {
+    fileUpload.addEventListener('change', function(e) {
+      const fileName = e.target.files[0]?.name || 'No file selected';
+      const fileSize = e.target.files[0]?.size || 0;
+      
+      // Update file info display if it exists
+      const fileInfo = document.getElementById('file-info');
+      if (fileInfo) {
+        fileInfo.innerHTML = `
+          <strong>File:</strong> ${fileName} <br>
+          <strong>Size:</strong> ${formatFileSize(fileSize)}
+        `;
+      }
+      
+      // Validate file type
+      if (fileSize > 0 && !fileName.toLowerCase().endsWith('.csv')) {
+        showError('Please select a CSV file');
+        fileUpload.value = '';
+        if (fileInfo) fileInfo.innerHTML = '';
+      }
+      
+      // Validate file size (16MB max)
+      if (fileSize > 16 * 1024 * 1024) {
+        showError('File size exceeds 16MB limit');
+        fileUpload.value = '';
+        if (fileInfo) fileInfo.innerHTML = '';
+      }
+    });
+  }
+  
+  // Initialize form submissions to show loading indicator
+  const forms = document.querySelectorAll('form');
+  forms.forEach(form => {
+    form.addEventListener('submit', function() {
+      // Don't show loading for clear dataset form
+      if (form.action.includes('clear_dataset')) {
+        return true;
+      }
+      
+      const loadingMessage = form.dataset.loadingMessage || 'Processing request...';
+      showLoading(loadingMessage);
+      return true;
+    });
+  });
+  
+  // Initialize tooltips
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
   });
   
 });
