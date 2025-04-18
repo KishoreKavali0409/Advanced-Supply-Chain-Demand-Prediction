@@ -37,7 +37,7 @@
   <div class="container mt-4 animated">
     <div class="row">
       <div class="col-lg-8 offset-lg-2">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm animated fade-in">
           <div class="card-header bg-primary">
             <h2 class="text-white mb-0">
               <i class="fas fa-chart-line me-2"></i>Demand Forecasting
@@ -69,11 +69,11 @@
               </div>
               
               <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary btn-lg" {% if not products %}disabled{% endif %}>
+                <button type="submit" class="btn btn-primary btn-lg btn-glow" {% if not products %}disabled{% endif %}>
                   <i class="fas fa-bolt me-2"></i> Generate Forecast
                 </button>
                 
-                <a href="/upload" class="btn btn-outline-secondary btn-lg">
+                <a href="/upload" class="btn btn-outline-secondary btn-lg animated slide-in-right">
                   <i class="fas fa-upload me-2"></i> Upload Custom Dataset
                 </a>
               </div>
@@ -99,7 +99,7 @@
         </div>
         {% endif %}
         
-        <div class="card mt-4 shadow-sm">
+        <div class="card mt-4 shadow-sm animated slide-in-up">
           <div class="card-header bg-info">
             <h3 class="text-white mb-0">
               <i class="fas fa-info-circle me-2"></i>About This Tool
@@ -109,11 +109,11 @@
             <p>This demand forecasting tool uses advanced time series analysis to predict future product demand based on historical data. Features include:</p>
             
             <ul class="list-group list-group-flush mb-3">
-              <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Time series forecasting with SARIMAX models</li>
-              <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Optimal inventory recommendations</li>
-              <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Reorder point calculation</li>
-              <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Safety stock optimization</li>
-              <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Interactive visualizations</li>
+              <li class="list-group-item animated slide-in-left" style="animation-delay: 0.1s;"><i class="fas fa-check-circle text-success me-2"></i> Time series forecasting with SARIMAX models</li>
+              <li class="list-group-item animated slide-in-left" style="animation-delay: 0.2s;"><i class="fas fa-check-circle text-success me-2"></i> Optimal inventory recommendations</li>
+              <li class="list-group-item animated slide-in-left" style="animation-delay: 0.3s;"><i class="fas fa-check-circle text-success me-2"></i> Reorder point calculation</li>
+              <li class="list-group-item animated slide-in-left" style="animation-delay: 0.4s;"><i class="fas fa-check-circle text-success me-2"></i> Safety stock optimization</li>
+              <li class="list-group-item animated slide-in-left" style="animation-delay: 0.5s;"><i class="fas fa-check-circle text-success me-2"></i> Interactive visualizations</li>
             </ul>
             
             <div class="alert alert-secondary">

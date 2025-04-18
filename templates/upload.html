@@ -64,7 +64,7 @@
         </div>
         {% endif %}
         
-        <div class="card shadow-sm">
+        <div class="card shadow-sm animated fade-in">
           <div class="card-header bg-primary">
             <h2 class="text-white mb-0">
               <i class="fas fa-upload me-2"></i>Upload Dataset
@@ -91,7 +91,7 @@
               </div>
               
               <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg">
+                <button type="submit" class="btn btn-primary btn-lg btn-glow">
                   <i class="fas fa-cloud-upload-alt me-2"></i> Upload and Process
                 </button>
               </div>
@@ -106,9 +106,11 @@
               
               <div class="d-grid gap-2 mt-4">
                 <h5><i class="fas fa-list me-2"></i>Available Products:</h5>
-                <div class="d-flex flex-wrap gap-2">
+                <div class="d-flex flex-wrap gap-2 mb-3">
                   {% for product in products %}
-                  <span class="badge bg-info text-dark">{{ product }}</span>
+                  <span class="badge bg-info text-dark animated bounce-in" style="animation-delay: {{ loop.index0 * 0.1 }}s; font-size: 0.95rem; padding: 8px 12px;">
+                    <i class="fas fa-tag me-1"></i> {{ product }}
+                  </span>
                   {% endfor %}
                 </div>
                 
@@ -132,9 +134,9 @@
                 </div>
                 
                 <form method="POST" action="/predict" class="mt-2">
-                  <div class="card">
+                  <div class="card animated fade-in">
                     <div class="card-header bg-success">
-                      <h4 class="text-white mb-0">Generate Forecast</h4>
+                      <h4 class="text-white mb-0"><i class="fas fa-chart-line me-2"></i>Generate Forecast</h4>
                     </div>
                     <div class="card-body">
                       <div class="row">
@@ -162,7 +164,7 @@
                       </div>
                       
                       <div class="d-grid">
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-success btn-glow">
                           <i class="fas fa-bolt me-2"></i> Generate Forecast
                         </button>
                       </div>
@@ -193,7 +195,7 @@
         </div>
         
         <!-- CSV Format Example Card -->
-        <div class="card mt-4">
+        <div class="card mt-4 animated slide-in-up">
           <div class="card-header bg-secondary">
             <h4 class="text-white mb-0"><i class="fas fa-file-alt me-2"></i>Example CSV Format</h4>
           </div>
