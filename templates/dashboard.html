@@ -66,10 +66,12 @@
                     <h4 class="card-title text-center">
                       <i class="fas fa-boxes me-2"></i>Total Forecasted Demand
                     </h4>
-                    <div class="display-4 text-center text-info mt-3">
-                      {{ total_forecasted_demand|round|int }}
+                    <div class="display-4 text-center text-info mt-3 animated pulse">
+                      <span style="text-shadow: 0 0 10px rgba(0, 195, 255, 0.5);">{{ total_forecasted_demand|round|int }}</span>
                     </div>
-                    <p class="text-center text-muted">Units over next 30 days</p>
+                    <p class="text-center text-muted">
+                      <i class="fas fa-calendar-alt me-1"></i> Units over next 30 days
+                    </p>
                   </div>
                 </div>
               </div>
@@ -91,9 +93,15 @@
                         <tbody>
                           {% for product, quantity in inventory_levels.items() %}
                           <tr>
-                            <td>{{ product }}</td>
+                            <td>
+                              <span class="badge bg-secondary text-white animated bounce-in" style="animation-delay: {{ loop.index0 * 0.1 }}s; font-size: 0.95rem; padding: 6px 10px;">
+                                <i class="fas fa-tag me-1"></i> {{ product }}
+                              </span>
+                            </td>
                             <td class="text-end">
-                              <span class="badge bg-primary">{{ quantity }} units</span>
+                              <span class="badge bg-primary animated pulse" style="font-size: 0.95rem; padding: 6px 10px;">
+                                <i class="fas fa-cubes me-1"></i> {{ quantity }} units
+                              </span>
                             </td>
                           </tr>
                           {% endfor %}
@@ -107,7 +115,7 @@
             
             <div class="row">
               <div class="col-lg-12">
-                <div class="card">
+                <div class="card animated slide-in-up">
                   <div class="card-header bg-dark">
                     <h4 class="text-white mb-0">
                       <i class="fas fa-chart-line me-2"></i>Combined Demand Forecast
@@ -130,13 +138,13 @@
                 <a href="/upload" class="btn btn-outline-primary">
                   <i class="fas fa-upload me-2"></i>Upload New Dataset
                 </a>
-                <a href="/download_all_forecasts" class="btn btn-outline-success">
+                <a href="/download_all_forecasts" class="btn btn-outline-success btn-glow">
                   <i class="fas fa-file-csv me-2"></i>Download All Forecasts
                 </a>
                 
                 <!-- Dropdown for selecting which product to generate a PDF report for -->
                 <div class="btn-group">
-                  <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button type="button" class="btn btn-outline-danger btn-glow dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-file-pdf me-2"></i>PDF Report
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end">
