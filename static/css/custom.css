@@ -1,0 +1,171 @@
+/* Custom styles for Smart Demand Forecast */
+
+/* Gradient backgrounds */
+.bg-gradient-primary {
+  background: linear-gradient(45deg, #1a237e, #283593) !important;
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(45deg, #263238, #37474f) !important;
+}
+
+.bg-gradient-success {
+  background: linear-gradient(45deg, #2e7d32, #388e3c) !important;
+}
+
+/* Card enhancements */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  font-weight: 600;
+}
+
+/* Button enhancements */
+.btn {
+  border-radius: 6px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn i {
+  transition: transform 0.3s ease;
+}
+
+.btn:hover i {
+  transform: translateX(3px);
+}
+
+/* Dropdown menu enhancements */
+.dropdown-menu {
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  border: none;
+  padding: 0.5rem 0;
+  background-color: #2c3e50;
+}
+
+.dropdown-item {
+  color: #ecf0f1 !important;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #34495e;
+  color: #fff !important;
+  transform: translateX(5px);
+}
+
+.dropdown-header {
+  color: #bdc3c7 !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.75rem;
+  padding: 0.7rem 1.5rem;
+}
+
+/* Chart container enhancements */
+.chart-container {
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  margin-top: 20px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Table styles */
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table thead th {
+  background-color: #1a237e;
+  color: white;
+  border: none;
+  padding: 0.75rem 1rem;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(26, 35, 126, 0.05);
+}
+
+/* Dashboard metrics */
+.metric-card {
+  border-left: 5px solid;
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+}
+
+.metric-card.primary {
+  border-left-color: #1a237e;
+}
+
+.metric-card.success {
+  border-left-color: #2e7d32;
+}
+
+.metric-card.warning {
+  border-left-color: #f57f17;
+}
+
+.metric-card.danger {
+  border-left-color: #c62828;
+}
+
+/* Form controls */
+.form-control, .form-select {
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #eee;
+}
+
+.form-control:focus, .form-select:focus {
+  box-shadow: 0 0 0 0.25rem rgba(26, 35, 126, 0.25);
+  border-color: #3949ab;
+}
+
+/* Animated elements */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Add glowing effect to important actions */
+.btn-glow {
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 5px rgba(26, 35, 126, 0.5); }
+  to { box-shadow: 0 0 20px rgba(26, 35, 126, 0.8); }
+}
