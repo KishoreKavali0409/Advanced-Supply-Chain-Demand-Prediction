@@ -132,6 +132,19 @@
                 <a href="/download_all_forecasts" class="btn btn-outline-success">
                   <i class="fas fa-file-csv me-2"></i>Download All Forecasts
                 </a>
+                
+                <!-- Dropdown for selecting which product to generate a PDF report for -->
+                <div class="btn-group">
+                  <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-file-pdf me-2"></i>PDF Report
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li><h6 class="dropdown-header">Select a product:</h6></li>
+                    {% for product, quantity in inventory_levels.items() %}
+                    <li><a class="dropdown-item" href="{{ url_for('download_report', product=product, days=30) }}" target="_blank">{{ product }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

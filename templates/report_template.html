@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Demand Forecast Report - {{ product }}</title>
+    <style>
+        @page {
+            size: a4 portrait;
+            margin: 2cm;
+            @frame header {
+                -pdf-frame-content: headerContent;
+                top: 0.5cm;
+                margin-left: 2cm;
+                margin-right: 2cm;
+                height: 3cm;
+            }
+            @frame footer {
+                -pdf-frame-content: footerContent;
+                bottom: 0.5cm;
+                margin-left: 2cm;
+                margin-right: 2cm;
+                height: 1cm;
+            }
+        }
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #333333;
+        }
+        h1 {
+            font-size: 20pt;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 0.6cm;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3cm;
+        }
+        h2 {
+            font-size: 16pt;
+            color: #3498db;
+            margin-top: 1cm;
+            margin-bottom: 0.4cm;
+        }
+        h3 {
+            font-size: 13pt;
+            color: #2c3e50;
+            margin-top: 0.8cm;
+            margin-bottom: 0.2cm;
+        }
+        p {
+            margin-bottom: 0.4cm;
+        }
+        .metadata {
+            margin-bottom: 1cm;
+            font-size: 9pt;
+            color: #555;
+        }
+        .metadata strong {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1cm;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            text-align: left;
+            padding: 8px;
+        }
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .metric-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+        .metric-title {
+            font-weight: bold;
+            font-size: 12pt;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 18pt;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+        .metric-desc {
+            font-size: 9pt;
+            color: #6c757d;
+        }
+        .recommendations {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 12px;
+            margin: 1cm 0;
+        }
+        .section-box {
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 1cm;
+        }
+        .trend-up {
+            color: #28a745;
+        }
+        .trend-down {
+            color: #dc3545;
+        }
+        .trend-stable {
+            color: #6c757d;
+        }
+        .chart-container {
+            width: 100%;
+            margin: 1cm 0;
+            text-align: center;
+        }
+        .chart-image {
+            max-width: 100%;
+            height: auto;
+        }
+        .notes {
+            font-size: 9pt;
+            color: #6c757d;
+            margin-top: 1cm;
+            padding-top: 0.5cm;
+            border-top: 1px solid #eee;
+        }
+        .footer {
+            font-size: 8pt;
+            color: #6c757d;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="headerContent">
+        <h1>Demand Forecast Report</h1>
+    </div>
+
+    <div class="metadata">
+        <p><strong>Product:</strong> {{ product }}</p>
+        <p><strong>Forecast Period:</strong> {{ days }} days</p>
+        <p><strong>Data Source:</strong> {{ dataset_source }}</p>
+        <p><strong>Report Generated:</strong> {{ current_date }}</p>
+    </div>
+
+    <h2>Executive Summary</h2>
+    <div class="section-box">
+        <p>
+            This report provides a detailed forecast for <strong>{{ product }}</strong> over the next {{ days }} days, 
+            based on historical demand data. The forecast predicts an average daily demand of <strong>{{ avg_forecast }}</strong> units,
+            with a total forecasted demand of <strong>{{ total_forecast }}</strong> units over the entire period.
+        </p>
+        <p>
+            The demand shows a
+            {% if trend_direction == "increasing" %}
+                <span class="trend-up"><strong>{{ trend_direction }}</strong></span> trend of <strong>{{ forecast_trend }}</strong> units
+            {% elif trend_direction == "decreasing" %}
+                <span class="trend-down"><strong>{{ trend_direction }}</strong></span> trend of <strong>{{ forecast_trend }}</strong> units
+            {% else %}
+                <span class="trend-stable"><strong>{{ trend_direction }}</strong></span> trend
+            {% endif %}
+            from the beginning to the end of the forecast period.
+        </p>
+    </div>
+
+    <h2>Key Metrics</h2>
+    <table>
+        <tr>
+            <th>Metric</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>Order Quantity</td>
+            <td>{{ order_quantity }} units</td>
+            <td>Recommended order size for optimal inventory</td>
+        </tr>
+        <tr>
+            <td>Reorder Point</td>
+            <td>{{ reorder_point }} units</td>
+            <td>Inventory level at which to place new orders</td>
+        </tr>
+        <tr>
+            <td>Safety Stock</td>
+            <td>{{ safety_stock }} units</td>
+            <td>Buffer stock to prevent stockouts</td>
+        </tr>
+        <tr>
+            <td>Total Cost</td>
+            <td>${{ total_cost }}</td>
+            <td>Estimated inventory holding and stockout costs</td>
+        </tr>
+    </table>
+
+    <h2>Demand Forecast Visualization</h2>
+    <div class="chart-container">
+        <img src="{{ chart_image }}" class="chart-image" alt="Demand Forecast Chart">
+    </div>
+
+    <h2>Forecast Data Table</h2>
+    <p>The following table shows the forecasted demand values for the next {{ days }} days:</p>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Forecasted Demand</th>
+        </tr>
+        {% for date, value in forecast_table %}
+        <tr>
+            <td>{{ date }}</td>
+            <td>{{ "%.2f"|format(value) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% if table_truncated %}
+    <p><em>Note: The table has been truncated to show only the first 20 days for better readability.</em></p>
+    {% endif %}
+
+    <h2>Recommendations</h2>
+    <div class="recommendations">
+        <h3>Inventory Management</h3>
+        <p>Maintain a safety stock of <strong>{{ safety_stock }}</strong> units to prevent stockouts during variability in demand or supply.</p>
+
+        <h3>Order Planning</h3>
+        <p>Place orders of <strong>{{ order_quantity }}</strong> units when inventory reaches the reorder point of <strong>{{ reorder_point }}</strong> units.</p>
+
+        <h3>Cost Optimization</h3>
+        <p>The estimated total cost for this inventory strategy is <strong>${{ total_cost }}</strong>, which balances holding costs and stockout risks.</p>
+    </div>
+
+    <h2>Notes and Assumptions</h2>
+    <div class="notes">
+        <p>This forecast is based on the following assumptions:</p>
+        <ul>
+            <li>Historical demand patterns will continue to be relevant for future demand.</li>
+            <li>The lead time for replenishment is constant.</li>
+            <li>A service level of 95% is targeted (5% acceptable stockout risk).</li>
+            <li>The forecast does not account for unexpected market disruptions or special events.</li>
+        </ul>
+        <p>For best results, the forecast should be regularly updated as new data becomes available.</p>
+    </div>
+
+    <div id="footerContent" class="footer">
+        <p>Report generated by Smart Demand Forecast on {{ current_date }} | Page <pdf:pagenumber> of <pdf:pagecount></p>
+    </div>
+</body>
+</html>

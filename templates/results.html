@@ -242,6 +242,11 @@
                   download="{{ product }}_forecast.csv">
                   <i class="fas fa-file-csv me-2"></i>Download CSV
                 </a>
+                <a href="{{ url_for('download_report', product=product, days=days) }}" 
+                  class="btn btn-outline-danger" 
+                  target="_blank">
+                  <i class="fas fa-file-pdf me-2"></i>Download PDF Report
+                </a>
               </div>
             </div>
           </div>

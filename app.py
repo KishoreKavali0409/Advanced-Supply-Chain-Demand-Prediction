@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, session, redirect, url_for, jsonify, flash
+from flask import Flask, render_template, request, send_file, session, redirect, url_for, jsonify, flash, make_response
 import pandas as pd
 import plotly.graph_objects as go
 import os
@@ -11,6 +11,9 @@ import threading
 import uuid
 import numpy as np
 from datetime import datetime
+
+# Import report generator
+from report_generator import generate_pdf_report
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -510,6 +513,57 @@ def download_all_forecasts():
     except Exception as e:
         logger.error(f"Error generating CSV for all products: {str(e)}")
         return render_template("error.html", error_message=str(e))
+
+@app.route("/download_report/<product>/<int:days>")
+def download_report(product, days):
+    """Generate and download a comprehensive PDF report for a product forecast."""
+    try:
+        logger.info(f"Generating PDF report for {product} with {days} days horizon")
+        
+        # Determine which dataset to use
+        dataset_source = "Default Dataset" 
+        if 'uploaded_dataset_id' in session:
+            cache_id = session['uploaded_dataset_id']
+            df = dataset_cache.get(cache_id)
+            if df is None:
+                return render_template("error.html", 
+                    error_message="Uploaded dataset no longer available. Please upload again.")
+            
+            # Verify product exists in the dataset
+            if product not in df['Product'].unique():
+                return render_template("error.html", 
+                    error_message=f"Selected product '{product}' not found in uploaded dataset")
+            
+            # Ensure Date is in datetime format
+            df['Date'] = pd.to_datetime(df['Date'], format='%d-%m-%Y')
+            dataset_source = "Uploaded Dataset"
+            
+            # Generate forecast
+            from forecast import forecast_demand
+            result = forecast_demand(product, days, data=df)
+        else:
+            # Use default dataset
+            from forecast import forecast_demand
+            result = forecast_demand(product, days)
+        
+        # Generate the PDF report
+        pdf_buffer = generate_pdf_report(product, days, result, dataset_source)
+        
+        # Create a filename with date stamp
+        today = datetime.now().strftime('%Y%m%d')
+        filename = f"{product}_forecast_report_{today}.pdf"
+        
+        # Return the PDF as a downloadable file
+        response = make_response(pdf_buffer.getvalue())
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = f'attachment; filename="{filename}"'
+        
+        logger.info(f"PDF report for {product} generated successfully")
+        return response
+        
+    except Exception as e:
+        logger.error(f"Error generating PDF report: {str(e)}")
+        return render_template("error.html", error_message=f"Error generating PDF report: {str(e)}")
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
