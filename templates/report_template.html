@@ -207,7 +207,7 @@
 
     <h2>Demand Forecast Visualization</h2>
     <div class="chart-container">
-        <img src="{{ chart_image }}" class="chart-image" alt="Demand Forecast Chart">
+        {{ chart_visualization|safe }}
     </div>
 
     <h2>Forecast Data Table</h2>

@@ -315,42 +315,93 @@ def generate_html_report(product, days, forecast_results, dataset_source="Defaul
     try:
         logger.info(f"Generating HTML report for {product}")
         
-        # Create a Plotly figure for the forecast
-        fig = go.Figure()
+        # Instead of using a Plotly image, create an HTML table representation of the data
+        # This avoids the need for kaleido or other image export libraries
         
-        # Add historical data
-        historical_dates = [datetime.strptime(d, '%Y-%m-%d') for d in forecast_results["historical_dates"]]
-        fig.add_trace(go.Scatter(
-            x=historical_dates,
-            y=forecast_results["historical_values"],
-            name='Historical Demand',
-            line=dict(color='blue', width=2),
-            mode='lines+markers'
-        ))
+        # Convert dates to proper format for display
+        historical_dates = [datetime.strptime(d, '%Y-%m-%d').strftime('%b %d, %Y') for d in forecast_results["historical_dates"][-7:]]  # Show last 7 days of historical data
+        forecast_dates = [datetime.strptime(d, '%Y-%m-%d').strftime('%b %d, %Y') for d in forecast_results["forecast_dates"]]
         
-        # Add forecast data
-        forecast_dates = [datetime.strptime(d, '%Y-%m-%d') for d in forecast_results["forecast_dates"]]
-        fig.add_trace(go.Scatter(
-            x=forecast_dates,
-            y=forecast_results["forecast_values"],
-            name='Forecast',
-            line=dict(color='orange', width=2, dash='dot'),
-            mode='lines+markers'
-        ))
+        # Create HTML for the chart visualization
+        chart_html = """
+        <div style="margin: 20px auto; max-width: 800px;">
+            <h3 style="text-align: center;">Demand Forecast Visualization for {}</h3>
+            <div style="display: flex; margin-bottom: 10px;">
+                <div style="width: 50%; text-align: center;">
+                    <div style="display: inline-block; width: 12px; height: 12px; background-color: #2c3e50; margin-right: 5px;"></div>
+                    <span>Historical Data (Last 7 days)</span>
+                </div>
+                <div style="width: 50%; text-align: center;">
+                    <div style="display: inline-block; width: 12px; height: 12px; background-color: #e74c3c; margin-right: 5px;"></div>
+                    <span>Forecast Data</span>
+                </div>
+            </div>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd;">
+                <tr style="background-color: #f2f2f2;">
+                    <th style="padding: 8px; text-align: left; border: 1px solid #ddd;">Period</th>
+                    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Date</th>
+                    <th style="padding: 8px; text-align: right; border: 1px solid #ddd;">Demand</th>
+                    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Visual Indicator</th>
+                </tr>
+        """.format(product)
         
-        # Update layout
-        fig.update_layout(
-            title=f'Demand Forecast for {product}',
-            xaxis_title='Date',
-            yaxis_title='Demand',
-            width=800,
-            height=400,
-        )
+        # Add historical data rows
+        for i, (date, value) in enumerate(zip(historical_dates, forecast_results["historical_values"][-7:])):
+            bar_width = min(int(value / 2), 100)  # Scale the bar width
+            chart_html += f"""
+                <tr>
+                    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">Historical</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">{date}</td>
+                    <td style="padding: 8px; text-align: right; border: 1px solid #ddd;">{value:.2f}</td>
+                    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+                        <div style="background-color: #2c3e50; height: 15px; width: {bar_width}%;"></div>
+                    </td>
+                </tr>
+            """
         
-        # Save the figure to a base64 string
-        img_bytes = fig.to_image(format="png")
-        encoded_image = base64.b64encode(img_bytes).decode('ascii')
-        img_src = f"data:image/png;base64,{encoded_image}"
+        # Add a separator row
+        chart_html += """
+            <tr>
+                <td colspan="4" style="padding: 4px; background-color: #f8f9fa; text-align: center; border: 1px solid #ddd; font-style: italic;">
+                    Forecast begins
+                </td>
+            </tr>
+        """
+        
+        # Add forecast data rows (limit to first 14 days for readability)
+        display_days = min(14, len(forecast_dates))
+        for i, (date, value) in enumerate(zip(forecast_dates[:display_days], forecast_results["forecast_values"][:display_days])):
+            bar_width = min(int(value / 2), 100)  # Scale the bar width
+            chart_html += f"""
+                <tr>
+                    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">Forecast</td>
+                    <td style="padding: 8px; text-align: center; border: 1px solid #ddd;">{date}</td>
+                    <td style="padding: 8px; text-align: right; border: 1px solid #ddd;">{value:.2f}</td>
+                    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+                        <div style="background-color: #e74c3c; height: 15px; width: {bar_width}%;"></div>
+                    </td>
+                </tr>
+            """
+        
+        # Add note if forecast is truncated
+        if display_days < len(forecast_dates):
+            chart_html += f"""
+                <tr>
+                    <td colspan="4" style="padding: 4px; background-color: #f8f9fa; text-align: center; border: 1px solid #ddd; font-style: italic;">
+                        {len(forecast_dates) - display_days} more days of forecast data not shown in this visualization
+                    </td>
+                </tr>
+            """
+        
+        # Close the table
+        chart_html += """
+            </table>
+        </div>
+        """
+        
+        # Use the HTML table as our chart image
+        img_src = ""  # No image needed
+        chart_visualization = chart_html
         
         # Prepare data for the template
         current_date = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -391,7 +442,7 @@ def generate_html_report(product, days, forecast_results, dataset_source="Defaul
             total_forecast="{:.2f}".format(total_forecast),
             trend_direction=trend_direction,
             forecast_trend="{:.2f}".format(abs(forecast_trend)),
-            chart_image=img_src,
+            chart_visualization=chart_visualization,
             forecast_table=forecast_table,
             table_truncated=table_truncated
         )
