@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Dataset | Smart Demand Forecast</title>
+  <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <i class="fas fa-chart-line me-2"></i>Smart Demand Forecast
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/"><i class="fas fa-home me-1"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/upload"><i class="fas fa-upload me-1"></i> Upload Dataset</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4 animated">
+    <div class="row mb-4">
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Upload Dataset</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        {% if error_message %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          <strong>Error:</strong> {{ error_message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        
+        {% if success_message %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <i class="fas fa-check-circle me-2"></i>
+          <strong>Success:</strong> {{ success_message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary">
+            <h2 class="text-white mb-0">
+              <i class="fas fa-upload me-2"></i>Upload Dataset
+            </h2>
+          </div>
+          <div class="card-body">
+            <form method="POST" action="/upload" enctype="multipart/form-data" id="upload-form">
+              <div class="mb-4">
+                <label for="dataset" class="form-label fw-bold">Select CSV File</label>
+                <input class="form-control form-control-lg" type="file" name="dataset" id="dataset" accept=".csv" required>
+                <div class="form-text">Upload a CSV file with columns: Date, Product, Demand, Inventory</div>
+              </div>
+              
+              <div class="alert alert-info">
+                <h5><i class="fas fa-info-circle me-2"></i>Dataset Requirements:</h5>
+                <ul class="mb-0">
+                  <li>Required columns: <code>Date</code>, <code>Product</code>, <code>Demand</code>, <code>Inventory</code></li>
+                  <li>Date format: DD-MM-YYYY (other formats will be attempted to be converted)</li>
+                  <li>Product column: A unique identifier or name for each product</li>
+                  <li>Demand column: Historical demand/sales in units</li>
+                  <li>Inventory column: Historical inventory levels</li>
+                  <li>At least 10 data points per product are required for forecasting</li>
+                </ul>
+              </div>
+              
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="fas fa-cloud-upload-alt me-2"></i> Upload and Process
+                </button>
+              </div>
+            </form>
+            
+            {% if preview_data %}
+            <div class="mt-5">
+              <h4><i class="fas fa-table me-2"></i>Data Preview</h4>
+              <div class="table-responsive">
+                {{ preview_data|safe }}
+              </div>
+              
+              <div class="d-grid gap-2 mt-4">
+                <h5><i class="fas fa-list me-2"></i>Available Products:</h5>
+                <div class="d-flex flex-wrap gap-2">
+                  {% for product in products %}
+                  <span class="badge bg-info text-dark">{{ product }}</span>
+                  {% endfor %}
+                </div>
+                
+                <a href="/dashboard" class="btn btn-outline-info mt-3">
+                  <i class="fas fa-tachometer-alt me-2"></i>View Dashboard with Uploaded Data
+                </a>
+                
+                <form method="POST" action="/predict" class="mt-2">
+                  <div class="card">
+                    <div class="card-header bg-success">
+                      <h4 class="text-white mb-0">Generate Forecast</h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label for="product" class="form-label">Select Product</label>
+                            <select class="form-select" name="product" id="product" required>
+                              {% for product in products %}
+                              <option value="{{ product }}">{{ product }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label for="days" class="form-label">Forecast Days</label>
+                            <input type="number" class="form-control" name="days" id="days" min="1" max="90" value="30" required>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="showGraph" name="showGraph" checked>
+                        <label class="form-check-label" for="showGraph">Show Visualization</label>
+                      </div>
+                      
+                      <div class="d-grid">
+                        <button type="submit" class="btn btn-success">
+                          <i class="fas fa-bolt me-2"></i> Generate Forecast
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                
+                <form method="POST" action="/clear_dataset" class="mt-3">
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-outline-danger">
+                      <i class="fas fa-trash-alt me-2"></i> Clear Uploaded Dataset
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+          
+          <div class="card-footer text-muted">
+            <div class="d-flex justify-content-between align-items-center">
+              <span><i class="fas fa-info-circle me-2"></i>Max file size: 16MB</span>
+              <a href="/" class="btn btn-sm btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Home
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CSV Format Example Card -->
+        <div class="card mt-4">
+          <div class="card-header bg-secondary">
+            <h4 class="text-white mb-0"><i class="fas fa-file-alt me-2"></i>Example CSV Format</h4>
+          </div>
+          <div class="card-body">
+            <pre class="bg-dark text-light p-3 rounded">Date,Product,Demand,Inventory
+01-01-2025,Smartphone,106,4675
+02-01-2025,Smartphone,89,5502
+03-01-2025,Smartphone,100,4581
+01-01-2025,Laptop,80,5546
+02-01-2025,Laptop,87,5512
+03-01-2025,Laptop,87,5336</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer mt-5 py-3 bg-dark">
+    <div class="container text-center">
+      <span class="text-muted">Smart Demand Forecast &copy; 2023</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
