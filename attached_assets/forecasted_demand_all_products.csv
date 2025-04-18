@@ -1,0 +1,301 @@
+Product,Date,Inventory
+Smartphone,2025-03-02,96
+Smartphone,2025-03-03,96
+Smartphone,2025-03-04,95
+Smartphone,2025-03-05,95
+Smartphone,2025-03-06,95
+Smartphone,2025-03-07,95
+Smartphone,2025-03-08,94
+Smartphone,2025-03-09,94
+Smartphone,2025-03-10,94
+Smartphone,2025-03-11,94
+Smartphone,2025-03-12,93
+Smartphone,2025-03-13,93
+Smartphone,2025-03-14,93
+Smartphone,2025-03-15,93
+Smartphone,2025-03-16,93
+Smartphone,2025-03-17,93
+Smartphone,2025-03-18,92
+Smartphone,2025-03-19,92
+Smartphone,2025-03-20,92
+Smartphone,2025-03-21,92
+Smartphone,2025-03-22,91
+Smartphone,2025-03-23,91
+Smartphone,2025-03-24,91
+Smartphone,2025-03-25,91
+Smartphone,2025-03-26,91
+Smartphone,2025-03-27,90
+Smartphone,2025-03-28,90
+Smartphone,2025-03-29,90
+Smartphone,2025-03-30,90
+Smartphone,2025-03-31,90
+Laptop,2025-03-02,78
+Laptop,2025-03-03,85
+Laptop,2025-03-04,79
+Laptop,2025-03-05,84
+Laptop,2025-03-06,79
+Laptop,2025-03-07,84
+Laptop,2025-03-08,79
+Laptop,2025-03-09,83
+Laptop,2025-03-10,79
+Laptop,2025-03-11,83
+Laptop,2025-03-12,79
+Laptop,2025-03-13,83
+Laptop,2025-03-14,78
+Laptop,2025-03-15,82
+Laptop,2025-03-16,78
+Laptop,2025-03-17,82
+Laptop,2025-03-18,78
+Laptop,2025-03-19,82
+Laptop,2025-03-20,78
+Laptop,2025-03-21,82
+Laptop,2025-03-22,77
+Laptop,2025-03-23,81
+Laptop,2025-03-24,77
+Laptop,2025-03-25,81
+Laptop,2025-03-26,77
+Laptop,2025-03-27,81
+Laptop,2025-03-28,76
+Laptop,2025-03-29,80
+Laptop,2025-03-30,76
+Laptop,2025-03-31,80
+Tablet,2025-03-02,98
+Tablet,2025-03-03,100
+Tablet,2025-03-04,100
+Tablet,2025-03-05,98
+Tablet,2025-03-06,100
+Tablet,2025-03-07,98
+Tablet,2025-03-08,100
+Tablet,2025-03-09,98
+Tablet,2025-03-10,100
+Tablet,2025-03-11,98
+Tablet,2025-03-12,100
+Tablet,2025-03-13,98
+Tablet,2025-03-14,101
+Tablet,2025-03-15,99
+Tablet,2025-03-16,101
+Tablet,2025-03-17,99
+Tablet,2025-03-18,101
+Tablet,2025-03-19,99
+Tablet,2025-03-20,101
+Tablet,2025-03-21,99
+Tablet,2025-03-22,101
+Tablet,2025-03-23,99
+Tablet,2025-03-24,101
+Tablet,2025-03-25,99
+Tablet,2025-03-26,101
+Tablet,2025-03-27,99
+Tablet,2025-03-28,102
+Tablet,2025-03-29,100
+Tablet,2025-03-30,102
+Tablet,2025-03-31,100
+Smartwatch,2025-03-02,66
+Smartwatch,2025-03-03,63
+Smartwatch,2025-03-04,65
+Smartwatch,2025-03-05,63
+Smartwatch,2025-03-06,65
+Smartwatch,2025-03-07,62
+Smartwatch,2025-03-08,65
+Smartwatch,2025-03-09,62
+Smartwatch,2025-03-10,64
+Smartwatch,2025-03-11,62
+Smartwatch,2025-03-12,64
+Smartwatch,2025-03-13,62
+Smartwatch,2025-03-14,64
+Smartwatch,2025-03-15,62
+Smartwatch,2025-03-16,64
+Smartwatch,2025-03-17,61
+Smartwatch,2025-03-18,63
+Smartwatch,2025-03-19,61
+Smartwatch,2025-03-20,63
+Smartwatch,2025-03-21,61
+Smartwatch,2025-03-22,63
+Smartwatch,2025-03-23,61
+Smartwatch,2025-03-24,63
+Smartwatch,2025-03-25,61
+Smartwatch,2025-03-26,63
+Smartwatch,2025-03-27,60
+Smartwatch,2025-03-28,62
+Smartwatch,2025-03-29,60
+Smartwatch,2025-03-30,62
+Smartwatch,2025-03-31,60
+Bluetooth Speaker,2025-03-02,102
+Bluetooth Speaker,2025-03-03,99
+Bluetooth Speaker,2025-03-04,102
+Bluetooth Speaker,2025-03-05,99
+Bluetooth Speaker,2025-03-06,102
+Bluetooth Speaker,2025-03-07,99
+Bluetooth Speaker,2025-03-08,102
+Bluetooth Speaker,2025-03-09,99
+Bluetooth Speaker,2025-03-10,102
+Bluetooth Speaker,2025-03-11,99
+Bluetooth Speaker,2025-03-12,101
+Bluetooth Speaker,2025-03-13,99
+Bluetooth Speaker,2025-03-14,101
+Bluetooth Speaker,2025-03-15,99
+Bluetooth Speaker,2025-03-16,101
+Bluetooth Speaker,2025-03-17,99
+Bluetooth Speaker,2025-03-18,101
+Bluetooth Speaker,2025-03-19,99
+Bluetooth Speaker,2025-03-20,101
+Bluetooth Speaker,2025-03-21,99
+Bluetooth Speaker,2025-03-22,101
+Bluetooth Speaker,2025-03-23,99
+Bluetooth Speaker,2025-03-24,101
+Bluetooth Speaker,2025-03-25,99
+Bluetooth Speaker,2025-03-26,101
+Bluetooth Speaker,2025-03-27,98
+Bluetooth Speaker,2025-03-28,101
+Bluetooth Speaker,2025-03-29,98
+Bluetooth Speaker,2025-03-30,101
+Bluetooth Speaker,2025-03-31,98
+Wireless Earbuds,2025-03-02,76
+Wireless Earbuds,2025-03-03,73
+Wireless Earbuds,2025-03-04,79
+Wireless Earbuds,2025-03-05,76
+Wireless Earbuds,2025-03-06,78
+Wireless Earbuds,2025-03-07,75
+Wireless Earbuds,2025-03-08,79
+Wireless Earbuds,2025-03-09,75
+Wireless Earbuds,2025-03-10,79
+Wireless Earbuds,2025-03-11,75
+Wireless Earbuds,2025-03-12,78
+Wireless Earbuds,2025-03-13,75
+Wireless Earbuds,2025-03-14,78
+Wireless Earbuds,2025-03-15,75
+Wireless Earbuds,2025-03-16,78
+Wireless Earbuds,2025-03-17,75
+Wireless Earbuds,2025-03-18,78
+Wireless Earbuds,2025-03-19,75
+Wireless Earbuds,2025-03-20,78
+Wireless Earbuds,2025-03-21,75
+Wireless Earbuds,2025-03-22,78
+Wireless Earbuds,2025-03-23,75
+Wireless Earbuds,2025-03-24,78
+Wireless Earbuds,2025-03-25,75
+Wireless Earbuds,2025-03-26,78
+Wireless Earbuds,2025-03-27,74
+Wireless Earbuds,2025-03-28,78
+Wireless Earbuds,2025-03-29,74
+Wireless Earbuds,2025-03-30,78
+Wireless Earbuds,2025-03-31,74
+4K TV,2025-03-02,90
+4K TV,2025-03-03,93
+4K TV,2025-03-04,91
+4K TV,2025-03-05,94
+4K TV,2025-03-06,91
+4K TV,2025-03-07,94
+4K TV,2025-03-08,91
+4K TV,2025-03-09,94
+4K TV,2025-03-10,92
+4K TV,2025-03-11,95
+4K TV,2025-03-12,92
+4K TV,2025-03-13,95
+4K TV,2025-03-14,92
+4K TV,2025-03-15,95
+4K TV,2025-03-16,93
+4K TV,2025-03-17,96
+4K TV,2025-03-18,93
+4K TV,2025-03-19,96
+4K TV,2025-03-20,93
+4K TV,2025-03-21,96
+4K TV,2025-03-22,93
+4K TV,2025-03-23,96
+4K TV,2025-03-24,94
+4K TV,2025-03-25,97
+4K TV,2025-03-26,94
+4K TV,2025-03-27,97
+4K TV,2025-03-28,94
+4K TV,2025-03-29,97
+4K TV,2025-03-30,95
+4K TV,2025-03-31,98
+Gaming Console,2025-03-02,143
+Gaming Console,2025-03-03,142
+Gaming Console,2025-03-04,142
+Gaming Console,2025-03-05,140
+Gaming Console,2025-03-06,142
+Gaming Console,2025-03-07,140
+Gaming Console,2025-03-08,142
+Gaming Console,2025-03-09,140
+Gaming Console,2025-03-10,142
+Gaming Console,2025-03-11,140
+Gaming Console,2025-03-12,142
+Gaming Console,2025-03-13,140
+Gaming Console,2025-03-14,142
+Gaming Console,2025-03-15,140
+Gaming Console,2025-03-16,142
+Gaming Console,2025-03-17,140
+Gaming Console,2025-03-18,142
+Gaming Console,2025-03-19,140
+Gaming Console,2025-03-20,142
+Gaming Console,2025-03-21,140
+Gaming Console,2025-03-22,142
+Gaming Console,2025-03-23,140
+Gaming Console,2025-03-24,142
+Gaming Console,2025-03-25,140
+Gaming Console,2025-03-26,142
+Gaming Console,2025-03-27,140
+Gaming Console,2025-03-28,142
+Gaming Console,2025-03-29,140
+Gaming Console,2025-03-30,142
+Gaming Console,2025-03-31,140
+Digital Camera,2025-03-02,108
+Digital Camera,2025-03-03,105
+Digital Camera,2025-03-04,109
+Digital Camera,2025-03-05,106
+Digital Camera,2025-03-06,109
+Digital Camera,2025-03-07,106
+Digital Camera,2025-03-08,109
+Digital Camera,2025-03-09,106
+Digital Camera,2025-03-10,110
+Digital Camera,2025-03-11,106
+Digital Camera,2025-03-12,110
+Digital Camera,2025-03-13,106
+Digital Camera,2025-03-14,110
+Digital Camera,2025-03-15,106
+Digital Camera,2025-03-16,110
+Digital Camera,2025-03-17,106
+Digital Camera,2025-03-18,110
+Digital Camera,2025-03-19,106
+Digital Camera,2025-03-20,110
+Digital Camera,2025-03-21,106
+Digital Camera,2025-03-22,110
+Digital Camera,2025-03-23,107
+Digital Camera,2025-03-24,110
+Digital Camera,2025-03-25,107
+Digital Camera,2025-03-26,110
+Digital Camera,2025-03-27,107
+Digital Camera,2025-03-28,110
+Digital Camera,2025-03-29,107
+Digital Camera,2025-03-30,111
+Digital Camera,2025-03-31,107
+E-Reader,2025-03-02,91
+E-Reader,2025-03-03,83
+E-Reader,2025-03-04,92
+E-Reader,2025-03-05,83
+E-Reader,2025-03-06,92
+E-Reader,2025-03-07,83
+E-Reader,2025-03-08,92
+E-Reader,2025-03-09,83
+E-Reader,2025-03-10,92
+E-Reader,2025-03-11,83
+E-Reader,2025-03-12,92
+E-Reader,2025-03-13,84
+E-Reader,2025-03-14,92
+E-Reader,2025-03-15,84
+E-Reader,2025-03-16,92
+E-Reader,2025-03-17,84
+E-Reader,2025-03-18,92
+E-Reader,2025-03-19,84
+E-Reader,2025-03-20,92
+E-Reader,2025-03-21,84
+E-Reader,2025-03-22,93
+E-Reader,2025-03-23,84
+E-Reader,2025-03-24,93
+E-Reader,2025-03-25,84
+E-Reader,2025-03-26,93
+E-Reader,2025-03-27,84
+E-Reader,2025-03-28,93
+E-Reader,2025-03-29,84
+E-Reader,2025-03-30,93
+E-Reader,2025-03-31,84

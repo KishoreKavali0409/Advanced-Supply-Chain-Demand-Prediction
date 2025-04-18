@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Upload Dataset and Forecast</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+    <h1>Upload Dataset and Forecast</h1>
+    {% if error_message %}
+        <div class="error">{{ error_message }}</div>
+    {% endif %}
+    <form method="post" action="{{ url_for('upload_forecast_upload') }}" enctype="multipart/form-data">
+        <label for="dataset">Upload CSV Dataset:</label>
+        <input type="file" name="dataset" id="dataset" accept=".csv" required />
+        <button type="submit">Upload</button>
+    </form>
+
+    {% if products %}
+    <hr />
+    <form method="post" action="{{ url_for('upload_forecast_forecast') }}">
+        <label for="product">Select Product:</label>
+        <select name="product" id="product" required>
+            {% for p in products %}
+            <option value="{{ p }}" {% if selected_product == p %}selected{% endif %}>{{ p }}</option>
+            {% endfor %}
+        </select>
+        <label for="days">Forecast Days:</label>
+        <input type="number" name="days" id="days" min="1" value="{{ days or 30 }}" required />
+        <button type="submit">Forecast</button>
+    </form>
+    {% endif %}
+
+    {% if forecast_result %}
+    <hr />
+    <h2>Forecast Results for {{ selected_product }}</h2>
+    <p>Order Quantity: {{ forecast_result.order_quantity }}</p>
+    <p>Reorder Point: {{ forecast_result.reorder_point }}</p>
+    <p>Safety Stock: {{ forecast_result.safety_stock }}</p>
+    <p>Total Cost: {{ forecast_result.total_cost }}</p>
+
+    <h3>Historical and Forecast Data</h3>
+    <table border="1">
+        <thead>
+            <tr><th>Date</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+            {% for date, value in forecast_result.historical_data %}
+            <tr><td>{{ date }}</td><td>{{ value }}</td></tr>
+            {% endfor %}
+            {% for date, value in forecast_result.forecast_data %}
+            <tr><td>{{ date }}</td><td>{{ value }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('download_forecast_csv') }}">Download Forecast CSV</a>
+    {% endif %}
+
+    <p><a href="{{ url_for('index') }}">Back to Home</a></p>
+</body>
+</html>
