@@ -82,10 +82,6 @@ Smart Demand Forecast is a Flask-based web application designed for demand forec
 
 (Ensure to install all dependencies via `pip install -r requirements.txt`)
 
-## Contact / Author
-
-For questions or support, please contact the project maintainer.
-
 ---
 
 This project provides a comprehensive solution for demand forecasting and inventory optimization with an easy-to-use web interface and detailed reporting capabilities.
