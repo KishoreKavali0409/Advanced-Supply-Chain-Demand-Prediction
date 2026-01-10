@@ -79,7 +79,6 @@ Smart Demand Forecast is a Flask-based web application designed for demand forec
 - xhtml2pdf
 - Jinja2
 - Werkzeug
-- 
 (Ensure to install all dependencies via `pip install -r requirements.txt`)
 
 ---
